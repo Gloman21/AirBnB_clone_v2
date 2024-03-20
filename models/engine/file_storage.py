@@ -1,17 +1,46 @@
 #!/usr/bin/python3
 """This module defines a class to manage file storage for hbnb clone"""
 import json
-
+from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
+import shlex
 
 class FileStorage:
     """This class manages storage of hbnb models in JSON format"""
     __file_path = 'file.json'
     __objects = {}
-
-    def all(self):
-        """Returns a dictionary of models currently in storage"""
-        return FileStorage.__objects
-
+    def delete(self, obj=None):
+        """ delete an object """
+        if obj:
+            key = "{}.{}".format(type(obj).__name__,obj.id)
+            print(key)
+            del self.__objects[key]
+        """if obj is None:
+            return
+        key = obj.__class__.__name__ + '.' + obj.id
+        State.dd89d59f-7a91-4a85-8746-be05c86cd54c
+        if key in FileStorage.__objects:
+            del FileStorage.__objects[key]
+        from models import storage
+        storage.save()"""
+    def all(self, cls = None):
+        """Returns a dictionary of objects"""
+        dic_obj = {}
+        if cls:
+            dict = self.__objects
+            for key in dict:
+                partition = key.replace('.', ' ')
+                partition = shlex.split(partition)
+                if (partition[0] == cls.__name__):
+                    dic_obj[key] = self.__objects[key]
+            return (dic_obj)
+        else:
+            return self.__objects
     def new(self, obj):
         """Adds new object to storage dictionary"""
         self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
