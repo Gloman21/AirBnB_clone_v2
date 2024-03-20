@@ -20,14 +20,6 @@ class FileStorage:
             key = "{}.{}".format(type(obj).__name__,obj.id)
             print(key)
             del self.__objects[key]
-        """if obj is None:
-            return
-        key = obj.__class__.__name__ + '.' + obj.id
-        State.dd89d59f-7a91-4a85-8746-be05c86cd54c
-        if key in FileStorage.__objects:
-            del FileStorage.__objects[key]
-        from models import storage
-        storage.save()"""
     def all(self, cls = None):
         """Returns a dictionary of objects"""
         dic_obj = {}
