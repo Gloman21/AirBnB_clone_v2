@@ -10,17 +10,21 @@ from models.place import Place
 from models.review import Review
 import shlex
 
+
 class FileStorage:
     """This class manages storage of hbnb models in JSON format"""
     __file_path = 'file.json'
     __objects = {}
+
     def delete(self, obj=None):
+
         """ delete an object """
         if obj:
-            key = "{}.{}".format(type(obj).__name__,obj.id)
+            key = "{}.{}".format(type(obj).__name__, obj.id)
             print(key)
             del self.__objects[key]
-    def all(self, cls = None):
+
+    def all(self, cls=None):
         """Returns a dictionary of objects"""
         dic_obj = {}
         if cls:
@@ -33,6 +37,7 @@ class FileStorage:
             return (dic_obj)
         else:
             return self.__objects
+
     def new(self, obj):
         """Adds new object to storage dictionary"""
         self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
@@ -66,6 +71,6 @@ class FileStorage:
             with open(FileStorage.__file_path, 'r') as f:
                 temp = json.load(f)
                 for key, val in temp.items():
-                        self.all()[key] = classes[val['__class__']](**val)
+                    self.all()[key] = classes[val['__class__']](**val)
         except FileNotFoundError:
             pass
