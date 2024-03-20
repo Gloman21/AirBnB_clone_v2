@@ -1,13 +1,19 @@
 #!/usr/bin/python3
 """This module defines a base class for all models in our hbnb clone"""
 import uuid
+import models
 from datetime import datetime
+
 
 
 class BaseModel:
     """A base class for all hbnb models"""
+    id = ""
+    created_at = ""
+    updated_at = ""
+
     def __init__(self, *arg, **kwargs):
-        """Instatntiates a new model"""
+        """ initialization """
         time_iso_format = "%Y-%m-%dT%H:%M:%S.%f"
         self.id = str(uuid.uuid4())
 
@@ -32,7 +38,8 @@ class BaseModel:
         """Updates updated_at with current time when instance is changed"""
         from models import storage
         self.updated_at = datetime.now()
-        storage.save()
+        models.storage.new(self)
+        models.storage.save()
 
     def to_dict(self):
         """Convert instance into dict format"""
@@ -43,3 +50,7 @@ class BaseModel:
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
         return dictionary
+
+    def delete(self):
+        """ delete object in storage"""
+        models.storage.delete(self)
