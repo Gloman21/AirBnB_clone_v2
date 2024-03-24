@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" DBSTORAGE class for sqlAlchemy """
+""" new class for sqlAlchemy """
 from os import getenv
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import (create_engine)
@@ -14,7 +14,7 @@ from models.amenity import Amenity
 
 
 class DBStorage:
-    """ create tables using envdata"""
+    """ create tables in environmental"""
     __engine = None
     __session = None
 
@@ -33,48 +33,52 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        """
-        returns a dictionary
+        """returns a dictionary
         Return:
             returns a dictionary of __object
         """
-        biglist = {}
+        dic = {}
         if cls:
             if type(cls) is str:
                 cls = eval(cls)
             query = self.__session.query(cls)
             for elem in query:
                 key = "{}.{}".format(type(elem).__name__, elem.id)
-                biglist[key] = elem
+                dic[key] = elem
         else:
-            typelist = [State, City, User, Place, Review, Amenity]
-            for type_m in typelist:
-                query = self.__session.query(type_m)
+            lista = [State, City, User, Place, Review, Amenity]
+            for clase in lista:
+                query = self.__session.query(clase)
                 for elem in query:
                     key = "{}.{}".format(type(elem).__name__, elem.id)
-                    biglist[key] = elem
-        return (biglist)
+                    dic[key] = elem
+        return (dic)
 
     def new(self, obj):
-        """add a new element in the table"""
+        """add a new element in the table
+        """
         self.__session.add(obj)
 
     def save(self):
-        """save changes"""
+        """save changes
+        """
         self.__session.commit()
 
     def delete(self, obj=None):
-        """delete an element in the table"""
+        """delete an element in the table
+        """
         if obj:
             self.session.delete(obj)
 
     def reload(self):
-        """reload _ configuration"""
+        """configuration
+        """
         Base.metadata.create_all(self.__engine)
-        sesh = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        Session = scoped_session(sesh)
+        sec = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        Session = scoped_session(sec)
         self.__session = Session()
 
     def close(self):
-        """ calls close()"""
+        """ calls remove()
+        """
         self.__session.close()

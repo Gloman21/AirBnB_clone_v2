@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""This module defines a class User"""
+"""This is the user class"""
 from sqlalchemy.ext.declarative import declarative_base
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Integer, String
@@ -9,8 +9,7 @@ from models.review import Review
 
 
 class User(BaseModel, Base):
-    """
-    User Representation
+    """This is the class for user
     Attributes:
         email: email address
         password: password for you login
