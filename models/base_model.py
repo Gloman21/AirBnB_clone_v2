@@ -3,14 +3,16 @@
 import uuid
 import models
 from datetime import datetime
+from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime
 
-
+Base = declarative_base()
 
 class BaseModel:
     """A base class for all hbnb models"""
-    id = ""
-    created_at = ""
-    updated_at = ""
+    id =  Column(String(60), unique=True, nullable=False, primary_key=True)
+    created_at = Column(DateTime, nullable=False, default=(datetime.utcnow()))
+    updated_at = Column(DateTime, nullable=False, default=(datetime.utcnow()))
 
     def __init__(self, *arg, **kwargs):
         """ initialization """
@@ -49,6 +51,8 @@ class BaseModel:
                           (str(type(self)).split('.')[-1]).split('\'')[0]})
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
+        if '_sa_instance_state' in dictionary.keys():
+            del dictionary['_sa_instance_state']
         return dictionary
 
     def delete(self):
