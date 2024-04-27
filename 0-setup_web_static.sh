@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 # script that sets up your web servers for the deployment of web_static
 
-sudo apt-get -y update
+sudo apt-get update
 sudo apt-get -y install nginx
 sudo ufw allow 'Nginx HTTP'
-sudo mkdir -p /data/web_static/releases/test /data/web_static/shared /data/web_static/current
+sudo mkdir -p /data
+sudo mkdir -p /web_static
+sudo mkidr -p /releases/test
+sudo mkdir -p /data/web_static/shared
+sudo mkdir -p /data/web_static/current
 
 echo "<html>
   <head>
