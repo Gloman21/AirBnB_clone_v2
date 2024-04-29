@@ -6,11 +6,11 @@ of the web_static folder of your AirBnB Clone repo, using the function do_pack
 from fabric.api import *
 from datetime import datetime
 
-def pack():
+def do_pack():
 
     """
-    making archive on web_static folder"""
-
+    making archive on web_static folder
+    """
 
     time = datetime.now()
     archive = 'web_static_' + time.strftime("%Y%m%d%H%M%S") + '.' + 'tgz'
